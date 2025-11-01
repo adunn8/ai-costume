@@ -1,124 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Costume Generator</title>
-  <style>
-    body {
-      background-color: black;
-      color: limegreen;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Costume Generator</title>
+<style>
+  body {
+    margin: 0;
+    background: black;
+    color: limegreen;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
 
-    #loading-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+  #loading-screen {
+    z-index: 2;
+  }
 
-    #video-container {
-      display: none;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1.5s ease-in; /* Fade-in transition */
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 10;
-    }
+  #video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in;
+    z-index: 1;
+  }
 
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    textarea {
-      background: black;
-      color: limegreen;
-      border: 1px solid limegreen;
-      width: 80%;
-      height: 80px;
-      margin-bottom: 20px;
-      padding: 10px;
-      font-size: 16px;
-      resize: none;
-    }
+  textarea {
+    background: black;
+    color: limegreen;
+    border: 1px solid limegreen;
+    width: 80%;
+    height: 80px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 16px;
+    resize: none;
+  }
 
-    button {
-      background: limegreen;
-      color: black;
-      border: none;
-      padding: 12px 24px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: transform 0.1s ease;
-      border-radius: 6px;
-    }
+  button {
+    background: limegreen;
+    color: black;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
 
-    button:hover {
-      transform: scale(1.05);
-    }
-  </style>
+  button:hover {
+    background: #00ff88;
+  }
+</style>
 </head>
 <body>
-  <div id="loading-screen">
-    <h1>🎃 AI Costume Generator 🎃</h1>
-    <p>Describe your dream costume below, or leave blank for a random one.</p>
-    <textarea id="costume-input" placeholder="Enter your costume idea..."></textarea><br>
-    <button id="create-btn">Create Costume</button>
-  </div>
+<div id="loading-screen">
+  <h1>🎃 AI Costume Generator 🎃</h1>
+  <p>Describe your dream costume below, or leave blank for a random one.</p>
+  <textarea id="costume-input" placeholder="Enter your costume idea..."></textarea><br>
+  <button id="create-btn">Create Costume</button>
+</div>
 
-  <div id="video-container">
-    <video id="rickroll-video" playsinline>
-      <source src="67_loop.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
+<div id="video-container">
+  <video id="rickroll-video" playsinline>
+    <source src="67_loop.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
-  <script>
-    const createBtn = document.getElementById('create-btn');
-    const video = document.getElementById('rickroll-video');
-    const videoContainer = document.getElementById('video-container');
-    const loadingScreen = document.getElementById('loading-screen');
+<script>
+const createBtn = document.getElementById('create-btn');
+const video = document.getElementById('rickroll-video');
+const videoContainer = document.getElementById('video-container');
+const loadingScreen = document.getElementById('loading-screen');
 
-    createBtn.addEventListener('click', () => {
-      const idea = document.getElementById('costume-input').value.trim();
-      const randomIdeas = [
-        "Haunted robot cowboy",
-        "Vampire astronaut",
-        "Pumpkin-headed samurai",
-        "Skeleton DJ",
-        "Zombie magician"
-      ];
-      const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
+createBtn.addEventListener('click', () => {
+  const idea = document.getElementById('costume-input').value.trim();
+  const randomIdeas = [
+    "Haunted robot cowboy",
+    "Vampire astronaut",
+    "Pumpkin-headed samurai",
+    "Skeleton DJ",
+    "Zombie magician"
+  ];
+  const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
 
-      // Show loading message
-      loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea}...</h2>`;
-      
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-        videoContainer.style.display = 'block';
+  loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea}...</h2>`;
 
-        // Trigger fade-in
-        requestAnimationFrame(() => {
-          videoContainer.style.opacity = 1;
-        });
+  setTimeout(() => {
+    loadingScreen.style.display = 'none';
+    videoContainer.style.pointerEvents = 'auto';
+    videoContainer.style.opacity = 1;
 
-        video.play().catch(() => {
-          alert("Tap the screen to start the video.");
-        });
-      }, 1500);
+    // Safari requires video to be visible on screen
+    video.play().catch(() => {
+      alert("Tap the screen to start the video.");
     });
-  </script>
+  }, 1500);
+});
+</script>
 </body>
 </html>
