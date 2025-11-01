@@ -107,6 +107,11 @@ createBtn.addEventListener('click', () => {
     videoContainer.style.pointerEvents = 'auto';
     videoContainer.style.opacity = 1;
 
+const videos = ["67_short.mp4", "rickroll.mp4"];
+  const chosenVideo = videos[Math.floor(Math.random() * videos.length)];
+  video.src = chosenVideo;
+  video.load();
+    
     // Safari requires video to be visible on screen
     video.play().catch(() => {
       alert("Tap the screen to start the video.");
