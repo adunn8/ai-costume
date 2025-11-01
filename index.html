@@ -70,8 +70,10 @@
 <body>
 <div id="loading-screen">
   <h1>🎃 AI Costume Generator 🎃</h1>
-  <p>I couldn't decide what to be, so you can decide for me.
-    Describe a costume below and AI will generate a virtual costume for me through your phone's camera (be nice!): </p>
+  <p id="instructions">
+    I couldn't decide what to be, so you can decide for me.<br>
+    Describe a costume below and AI will generate a virtual costume for me through your phone's camera (be nice!):
+  </p>
   <textarea id="costume-input" placeholder="Enter your costume idea ..."></textarea><br>
   <button id="create-btn">Create Costume</button>
 </div>
@@ -88,6 +90,7 @@ const createBtn = document.getElementById('create-btn');
 const video = document.getElementById('rickroll-video');
 const videoContainer = document.getElementById('video-container');
 const loadingScreen = document.getElementById('loading-screen');
+const instructions = document.getElementById('instructions');
 
 createBtn.addEventListener('click', () => {
   const idea = document.getElementById('costume-input').value.trim();
@@ -100,18 +103,18 @@ createBtn.addEventListener('click', () => {
   ];
   const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
 
-  loadingScreen.innerHTML = `<h2>Get ready and point your phone's camera at me ... ${chosenIdea}...</h2>`;
+  // Update instructions after user clicks
+  instructions.innerHTML = `Get ready and point your phone's camera at me...<br>Generating costume: <strong>${chosenIdea}</strong>`;
 
   setTimeout(() => {
     loadingScreen.style.display = 'none';
     videoContainer.style.pointerEvents = 'auto';
     videoContainer.style.opacity = 1;
 
-    // Safari requires video to be visible on screen
     video.play().catch(() => {
       alert("Tap the screen to start the video.");
     });
-  }, 5000);
+  }, 5000); // Adjust this timeout for loading screen duration
 });
 </script>
 </body>
