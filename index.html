@@ -7,23 +7,63 @@
   <style>
     body {
       margin: 0;
-      background-color: black;
+      background: black;
+      color: limegreen;
+      font-family: 'Courier New', monospace;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      text-align: center;
+    }
+    #startBtn {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      color: black;
+      background: limegreen;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    #startBtn:hover {
+      background: #00ff88;
     }
     video {
       width: 100%;
-      height: auto;
-      max-height: 100vh;
+      height: 100%;
+      object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <video autoplay loop muted playsinline controls>
+  <div id="intro">
+    <h1>🤖 Initializing AI Costume System...</h1>
+    <p>Press "Activate" to calibrate sensors</p>
+    <button id="startBtn">Activate</button>
+  </div>
+
+  <video id="memeVideo" playsinline>
     <source src="67_loop.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const intro = document.getElementById('intro');
+    const vid = document.getElementById('memeVideo');
+
+    startBtn.addEventListener('click', () => {
+      intro.style.display = 'none';
+      vid.style.display = 'block';
+      vid.play();
+    });
+  </script>
 </body>
 </html>
