@@ -70,7 +70,8 @@
 <body>
 <div id="loading-screen">
   <h1>🎃 AI Costume Generator 🎃</h1>
-  <p>I couldn't decide what to be, so you can decide for me.  Describe a costume below and AI will generate a virtual costume for me through your phone's camera (be nice!): </p>
+  <p>I couldn't decide what to be, so you can decide for me. <br> 
+    Describe a costume below and AI will generate a virtual costume for me through your phone's camera (be nice!): </p>
   <textarea id="costume-input" placeholder="Enter your costume idea ..."></textarea><br>
   <button id="create-btn">Create Costume</button>
 </div>
@@ -110,7 +111,7 @@ createBtn.addEventListener('click', () => {
     video.play().catch(() => {
       alert("Tap the screen to start the video.");
     });
-  }, 1500);
+  }, 3000);
 });
 </script>
 </body>
