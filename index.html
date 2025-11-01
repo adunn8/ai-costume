@@ -187,7 +187,7 @@ createBtn.addEventListener('click', () => {
   ];
   const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
 
-  loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea} ... Get ready and point your phone's camera at me.</h2>`;
+  loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea} ... </h2>`;
 
   setTimeout(() => {
     loadingScreen.style.display = 'none';
