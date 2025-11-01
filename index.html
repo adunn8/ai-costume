@@ -6,120 +6,119 @@
   <title>AI Costume Generator</title>
   <style>
     body {
-      margin: 0;
-      background: black;
+      background-color: black;
       color: limegreen;
       font-family: 'Courier New', monospace;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
+      margin: 0;
       text-align: center;
-      overflow: hidden;
     }
-    h1 { margin-bottom: 20px; }
-    input {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px;
-      font-size: 1em;
-      border: 2px solid limegreen;
-      background: black;
-      color: limegreen;
-      border-radius: 4px;
-      outline: none;
+
+    #loading-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    #generateBtn {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 1.2em;
-      color: black;
-      background: limegreen;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    #generateBtn:hover { background: #00ff88; }
-    #loading {
+
+    #video-container {
       display: none;
-      font-size: 1.3em;
-      color: limegreen;
-      margin-top: 20px;
-      white-space: pre-line;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1.5s ease-in; /* Fade-in transition */
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
     }
+
     video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: none;
-      z-index: 10;
+    }
+
+    textarea {
+      background: black;
+      color: limegreen;
+      border: 1px solid limegreen;
+      width: 80%;
+      height: 80px;
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none;
+    }
+
+    button {
+      background: limegreen;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      border-radius: 6px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <div id="intro">
+  <div id="loading-screen">
     <h1>🎃 AI Costume Generator 🎃</h1>
-    <p>Describe the costume you want to generate:</p>
-    <input id="costumeInput" type="text" placeholder="e.g. Vampire astronaut, disco skeleton..." />
-    <button id="generateBtn">Create Costume</button>
-    <div id="loading"></div>
+    <p>Describe your dream costume below, or leave blank for a random one.</p>
+    <textarea id="costume-input" placeholder="Enter your costume idea..."></textarea><br>
+    <button id="create-btn">Create Costume</button>
   </div>
 
-  <video id="memeVideo" playsinline>
-    <source src="67_loop.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div id="video-container">
+    <video id="rickroll-video" playsinline>
+      <source src="67_loop.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
 
   <script>
-    window.onload = () => {
-      const btn = document.getElementById('generateBtn');
-      const input = document.getElementById('costumeInput');
-      const loading = document.getElementById('loading');
-      const intro = document.getElementById('intro');
-      const vid = document.getElementById('memeVideo');
+    const createBtn = document.getElementById('create-btn');
+    const video = document.getElementById('rickroll-video');
+    const videoContainer = document.getElementById('video-container');
+    const loadingScreen = document.getElementById('loading-screen');
 
-      const fakeMessages = [
-        "Analyzing fashion trends...",
-        "Scanning pumpkin DNA...",
-        "Compiling spooky parameters...",
-        "Synthesizing costume fabric...",
-        "Applying glitter shaders...",
-        "Finalizing AI Costume..."
+    createBtn.addEventListener('click', () => {
+      const idea = document.getElementById('costume-input').value.trim();
+      const randomIdeas = [
+        "Haunted robot cowboy",
+        "Vampire astronaut",
+        "Pumpkin-headed samurai",
+        "Skeleton DJ",
+        "Zombie magician"
       ];
+      const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
 
-      btn.addEventListener('click', async () => {
-        const userText = input.value.trim();
-        const costumeText = userText || "Randomized AI Costume";
-        
-        intro.querySelector('p').textContent = `Generating: ${costumeText}`;
-        btn.style.display = 'none';
-        input.style.display = 'none';
-        loading.style.display = 'block';
-        loading.textContent = "";
+      // Show loading message
+      loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea}...</h2>`;
+      
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        videoContainer.style.display = 'block';
 
-        let i = 0;
-        const interval = setInterval(() => {
-          loading.textContent += `\n${fakeMessages[i++]}`;
-          if (i >= fakeMessages.length) {
-            clearInterval(interval);
-            setTimeout(async () => {
-              intro.style.display = 'none';
-              vid.style.display = 'block';
-              try {
-                await vid.play();
-              } catch (e) {
-                console.error("Playback failed:", e);
-              }
-            }, 1000);
-          }
-        }, 800);
-      });
-    };
+        // Trigger fade-in
+        requestAnimationFrame(() => {
+          videoContainer.style.opacity = 1;
+        });
+
+        video.play().catch(() => {
+          alert("Tap the screen to start the video.");
+        });
+      }, 1500);
+    });
   </script>
 </body>
 </html>
