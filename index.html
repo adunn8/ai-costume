@@ -16,8 +16,23 @@
       align-items: center;
       height: 100vh;
       text-align: center;
+      overflow: hidden;
     }
-    #startBtn {
+    h1 {
+      margin-bottom: 20px;
+    }
+    input {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px;
+      font-size: 1em;
+      border: 2px solid limegreen;
+      background: black;
+      color: limegreen;
+      border-radius: 4px;
+      outline: none;
+    }
+    #generateBtn {
       margin-top: 20px;
       padding: 12px 24px;
       font-size: 1.2em;
@@ -28,8 +43,15 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    #startBtn:hover {
+    #generateBtn:hover {
       background: #00ff88;
+    }
+    #loading {
+      display: none;
+      font-size: 1.3em;
+      color: limegreen;
+      margin-top: 20px;
+      white-space: pre-line;
     }
     video {
       width: 100%;
@@ -44,26 +66,19 @@
 </head>
 <body>
   <div id="intro">
-    <h1>🤖 Initializing AI Costume System...</h1>
-    <p>Press "Activate" to calibrate sensors</p>
-    <button id="startBtn">Activate</button>
+    <h1>🎃 AI Costume Generator 🎃</h1>
+    <p>Describe the costume you want to generate:</p>
+    <input id="costumeInput" type="text" placeholder="e.g. Vampire astronaut, disco skeleton..." />
+    <button id="generateBtn">Create Costume</button>
+    <div id="loading"></div>
   </div>
 
   <video id="memeVideo" playsinline>
-    <source src="67_loop.mp4" type="video/mp4">
+    <source src="67-meme.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
   <script>
-    const startBtn = document.getElementById('startBtn');
-    const intro = document.getElementById('intro');
-    const vid = document.getElementById('memeVideo');
-
-    startBtn.addEventListener('click', () => {
-      intro.style.display = 'none';
-      vid.style.display = 'block';
-      vid.play();
-    });
-  </script>
-</body>
-</html>
+    const btn = document.getElementById('generateBtn');
+    const input = document.getElementById('costumeInput');
+    const loading = document.getElemen
