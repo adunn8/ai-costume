@@ -70,14 +70,14 @@
 <body>
 <div id="loading-screen">
   <h1>🎃 AI Costume Generator 🎃</h1>
-  <p>Describe your dream costume below, or leave blank for a random one.</p>
-  <textarea id="costume-input" placeholder="Enter your costume idea..."></textarea><br>
+  <p>I couldn't decide what to be, so you can decide for me.  Describe a costume below and AI will generate a virtual costume for me through your phone's camera (be nice!): </p>
+  <textarea id="costume-input" placeholder="Enter your costume idea ..."></textarea><br>
   <button id="create-btn">Create Costume</button>
 </div>
 
 <div id="video-container">
   <video id="rickroll-video" playsinline>
-    <source src="67_loop.mp4" type="video/mp4">
+    <source src="67_short.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
@@ -99,7 +99,7 @@ createBtn.addEventListener('click', () => {
   ];
   const chosenIdea = idea || randomIdeas[Math.floor(Math.random() * randomIdeas.length)];
 
-  loadingScreen.innerHTML = `<h2>Generating costume: ${chosenIdea}...</h2>`;
+  loadingScreen.innerHTML = `<h2>Get ready and point your phone's camera at me ... ${chosenIdea}...</h2>`;
 
   setTimeout(() => {
     loadingScreen.style.display = 'none';
